@@ -7,7 +7,7 @@ This repository contains the solution to the Cash Register Challenge, a simple a
 2. Install the required dependencies using `gem rspec install`.
 ## Usage
 
-- This app doesn't have a user interface yet. It's a module to define product attributes.
+- This app doesn't have a user interface yet. It's a module to define product and cart attributes.
 
 ## Contributing
 
