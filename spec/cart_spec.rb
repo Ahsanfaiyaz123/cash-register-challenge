@@ -86,7 +86,7 @@ describe Cart do
 
     it 'applies the coffee addict discount for Coffee (CF1)' do
       cart.add_item(product3, 3) # Adding 3 Coffees
-      expect { cart.apply_pricing_rules }.to change { cart.total_price }.from(33.69).to(22.47)
+      expect { cart.apply_pricing_rules }.to change { cart.total_price }.from(33.69).to(22.46)
     end
 
     it 'does not apply any discounts for products with quantity less than the discount threshold' do

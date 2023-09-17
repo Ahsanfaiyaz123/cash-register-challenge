@@ -22,6 +22,7 @@ module PricingRules
     return 0.0 unless items[product_code] && items[product_code] >= DISCOUNT_RULE_QUANTITY[product_code]
 
     product = Product.find(product_code)
-    items[product_code] * (product.base_price - (product.base_price * COFFEE_DISCOUNT_VALUE)).round(2)
+    items[product_code] * (product.base_price - (product.base_price * COFFEE_DISCOUNT_VALUE))
   end
+
 end

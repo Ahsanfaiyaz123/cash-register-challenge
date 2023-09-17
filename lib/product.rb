@@ -17,7 +17,7 @@ class Product
   end
 
   def self.find(code)
-    ProductCatalog.products[code]
+    ProductCatalog.products.fetch(code) { raise ArgumentError, 'Invalid product code' }
   end
 
   def save

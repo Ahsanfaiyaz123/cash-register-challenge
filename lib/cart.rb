@@ -17,7 +17,7 @@ class Cart
   end
 
   def total_price
-    @total_price ||= calculate_total_price
+    (@total_price ||= calculate_total_price).round(2)
   end
 
   def apply_pricing_rules
