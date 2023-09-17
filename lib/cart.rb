@@ -1,4 +1,5 @@
 # lib/cart.rb
+require_relative 'pricing_rules'
 
 class Cart
   attr_reader :items, :total_price
@@ -19,7 +20,23 @@ class Cart
     @total_price ||= calculate_total_price
   end
 
+  def apply_pricing_rules
+    discounted_product_rules.each do |product_code, discount_method|
+      next unless PricingRules.respond_to? discount_method
+
+      @total_price -= PricingRules.send(discount_method, items, product_code)
+    end
+  end
+
   private
+
+  def discounted_product_rules
+    {
+      'GR1' => :apply_buy_one_get_one_free_rule,
+      'SR1' => :apply_bulk_discount_rule,
+      'CF1' => :apply_coffee_addict_discount_rule
+    }
+  end
 
   def update_total_price(base_price, quantity)
     @total_price += base_price * quantity
