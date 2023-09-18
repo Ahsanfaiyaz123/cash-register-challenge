@@ -1,8 +1,8 @@
 # lib/product.rb
-require_relative 'product_catalog'
 
 class Product
   attr_reader :code, :name, :base_price
+  @@products = Hash.new {0}
 
   def initialize(code, name, base_price)
     @code = code
@@ -16,14 +16,17 @@ class Product
     base_price * quantity
   end
 
-  def self.find(code)
-    ProductCatalog.products.fetch(code) { raise ArgumentError, 'Invalid product code' }
-  end
-
   def save
     validate_input
+    @@products[code] = self
+  end
 
-    ProductCatalog.add_product(self)
+  def self.find(code)
+    all.fetch(code) { raise ArgumentError, 'Invalid product code' }
+  end
+
+  def self.all
+    @@products
   end
 
   private

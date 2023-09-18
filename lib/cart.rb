@@ -5,8 +5,7 @@ class Cart
   attr_reader :items, :total_price
 
   def initialize
-    @items = Hash.new(0)
-    @total_price = 0.0
+    setup_cart
   end
 
   def add_item(product, quantity=1)
@@ -22,10 +21,29 @@ class Cart
 
   def apply_pricing_rules
     discounted_product_rules.each do |product_code, discount_method|
+
       next unless PricingRules.respond_to? discount_method
 
       @total_price -= PricingRules.send(discount_method, items, product_code)
     end
+  end
+
+  def setup_cart
+    @items = Hash.new(0)
+    @total_price = 0.0
+  end
+
+  def clear
+    setup_cart
+  end
+
+  def display
+    puts 'Cart Contents:'
+    items.each do |product_code, quantity|
+      product = Product.find(product_code)
+      puts "#{quantity} x #{product.name} - #{product.calculate_price(quantity)}€"
+    end
+    puts "Total: #{total_price}€"
   end
 
   private
